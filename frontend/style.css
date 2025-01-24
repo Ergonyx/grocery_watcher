@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    height: 98vh;
+    border: 1px solid red;
+    justify-content: center;
+    align-items: center;
+}
+
+.uom {
+    display: flex;
+}
+
+form {
+    border: 1px solid green;
+    transform:scale(1.5)
+}
