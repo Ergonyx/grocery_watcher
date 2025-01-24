@@ -14,7 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 const dbService = require('./dbService')
 
 // These seem to just appear. Honestly not sure wtf is going on here.
-const { raw } = require("tmi.js/lib/commands");
 const { response } = require("express");
 
 app.listen(process.env.EXPRESS_PORT, () => {

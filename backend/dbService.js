@@ -27,7 +27,7 @@ class DbService {
         try {
             console.log(params)
             const alreadyExists = await new Promise ((resolve, reject) => {
-                const query = `SELECT * FROM products WHERE barcode = ${params.barcode};`
+                const query = `SELECT * FROM products WHERE barcode = '${params.barcode}';`
                 connection.query(query, (err, results) => {
                     if (err) reject(new Error(err.message))
                     resolve(results)
@@ -40,7 +40,7 @@ class DbService {
                 const response = await new Promise((resolve, reject) => {
                     const query = `
                         INSERT INTO products(date_created,name,barcode)
-                        VALUES('${params.date_created}','${params.name}',${params.barcode});
+                        VALUES('${params.date_created}','${params.name}','${params.barcode}');
                     `
                     connection.query(query, (err, results) => {
                         if (err) reject(new Error(err.message))
