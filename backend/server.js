@@ -33,46 +33,8 @@ app.post('/v1/add', (req, res) => {
     .catch(err => console.log(err))
 })
 // READ
-app.get('/v1/points/lookup/top10', (req, res) => {
-    const db = dbService.getDbServiceInstance();
-    const result = db.getTop10()
-    result
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err => console.log(err))
-})
-
-app.get('/v1/points/lookup/:username', (req, res) => {
-    const db = dbService.getDbServiceInstance();
-    const result = db.getUserPoints(req.params.username)
-    result
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err => console.log(err))
-})
 
 // UPDATE
-app.patch('/v1/points/add/:username', (req, res) => {
-    const db = dbService.getDbServiceInstance();
-    const result = db.addPoints(req.params.username)
-    result
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err => console.log(err))
-})
 
-app.patch('/v1/points/batch', (req, res) => {
-    // console.log(req.query, req.body)
-    const db = dbService.getDbServiceInstance();
-    const result = db.batchTest(req.body.activeUsers)
-    result
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err => console.log(err))
-})
 // DELETE
 
