@@ -22,10 +22,14 @@ class DbService {
     static getDbServiceInstance() {
         return instance ? instance : new DbService()
     }
-    
+    // TODO: Implement API key check so I'm not doing a bunch of random shit.
     async addNew(params) {
         try {
-            console.log(params)
+            console.log(`
+                +----------------------+
+                |      Parameters      |
+                +----------------------+
+                `, params)
             const alreadyExists = await new Promise ((resolve, reject) => {
                 const query = `SELECT * FROM products WHERE barcode = '${params.barcode}';`
                 connection.query(query, (err, results) => {
@@ -33,14 +37,26 @@ class DbService {
                     resolve(results)
                 })
             })
-            console.log(alreadyExists)
+            // If the barcode exists in the system, add this entry to the products history.
             if (alreadyExists.length > 0) {
-                return `Error: Product already exists with this barcode.`
+                const response = await new Promise((resolve, reject) => {
+                    console.log(alreadyExists)
+                    const query = `
+                        INSERT INTO product_history(productid, barcode, price, unit_of_measure, unit_of_measure_type, pieces, parent_company)
+                        VALUES(${alreadyExists[0].id},'${params.barcode}','${params.price}','${params.unit_of_measure}','${params.unit_of_measure_type}','${params.pieces}','${params.parent_company}');
+                    `
+                    connection.query(query, (err, results) => {
+                        if (err) reject(new Error(err.message))
+                        resolve(results)
+                    })
+                })
+                return response
+            // If it doesn't exist, add a new product.
             } else {
                 const response = await new Promise((resolve, reject) => {
                     const query = `
-                        INSERT INTO products(date_created,name,barcode)
-                        VALUES('${params.date_created}','${params.name}','${params.barcode}');
+                        INSERT INTO products(name, barcode, price, unit_of_measure, unit_of_measure_type, pieces, parent_company)
+                        VALUES('${params.name}','${params.barcode}','${params.price}','${params.unit_of_measure}','${params.unit_of_measure_type}','${params.pieces}','${params.parent_company}');
                     `
                     connection.query(query, (err, results) => {
                         if (err) reject(new Error(err.message))

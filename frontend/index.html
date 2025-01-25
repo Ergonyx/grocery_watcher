@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <form action="http://addnew.alexrichardson.tech/v1/add" method="POST" class="myform">
+    <!-- TODO: Form Validation -->
+    <form action="http://addnew.alexrichardson.tech:3306/v1/add" method="POST" class="myform" target="response">
         <div class="form-field">
             <label for="apikey">API Key</label><Br>
             <input type="text" name="apikey" id="apikey" required>
@@ -45,15 +46,17 @@
             <label for="pieces"># of Pieces</label><Br>
             <input type="text" name="pieces" id="pieces">
         </div>
-        <div class="form-field">
+        <!-- <div class="form-field">
             <label for="photos">Photos</label><Br>
             <input type="file" name="photos" id="photos">
-        </div>
+        </div> -->
         <div class="form-field">
             <label for="parent_company">Parent Company</label><Br>
             <input type="text" name="parent_company" id="parent_company">
         </div>
+        <!-- TODO: Make form just use a javascript function to grab values from the DOM and submit them. -->
         <input type="submit" value="Submit" enctype="x-www-form-urlencoded">
     </form>
+    <iframe name="response" id="response" style="display: none;"></iframe>
 </body>
 </html>
